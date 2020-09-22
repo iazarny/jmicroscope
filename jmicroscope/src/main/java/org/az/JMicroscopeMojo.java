@@ -42,8 +42,8 @@ public class JMicroscopeMojo    extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
-    //@Parameter(property = "scope")
-   // String scope;
+    @Parameter(property = "scope")
+    String scope;
 
 
     /**
@@ -51,47 +51,63 @@ public class JMicroscopeMojo    extends AbstractMojo {
      * @parameter expression="${project.build.directory}"
      * @required
      */
-    private File outputDirectory;
+    //@Parameter(property = "${project.build.directory}")
+    //private File outputDirectory;
 
     public void execute()   throws MojoExecutionException   {
+
+
+        getLog().info("Java microscope: ");
+
+        System.out.println("-------------------------------------------");
+        System.out.println(project);
+        System.out.println(scope);
+        System.out.println(project.getBuild().getOutputDirectory());
+        System.out.println("-------------------------------------------");
 
         List<Dependency> dependencies = project.getDependencies();
         long numDependencies = dependencies.stream().count();
         getLog().info("Number of dependencies: " + numDependencies);
 
-        File f = outputDirectory;
+        /*try {
+            File f = outputDirectory;
 
-        if ( !f.exists() )
-        {
-            f.mkdirs();
-        }
-
-        File touch = new File( f, "touch.txt" );
-
-        FileWriter w = null;
-        try
-        {
-            w = new FileWriter( touch );
-
-            w.write( "touch.txt" );
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( "Error creating file " + touch, e );
-        }
-        finally
-        {
-            if ( w != null )
+            if ( !f.exists() )
             {
-                try
+                f.mkdirs();
+            }
+
+            File touch = new File( f, "touch.txt" );
+
+            FileWriter w = null;
+            try
+            {
+                w = new FileWriter( touch );
+
+                w.write( "touch.txt" );
+            }
+            catch ( IOException e )
+            {
+                throw new MojoExecutionException( "Error creating file " + touch, e );
+            }
+            finally
+            {
+                if ( w != null )
                 {
-                    w.close();
-                }
-                catch ( IOException e )
-                {
-                    // ignore
+                    try
+                    {
+                        w.close();
+                    }
+                    catch ( IOException e )
+                    {
+                        // ignore
+                    }
                 }
             }
-        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+
     }
 }
